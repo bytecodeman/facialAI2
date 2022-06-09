@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Real Time Face Analyzer!</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="author" content="Antonio C. Silvestri" />
+        <meta name="description"
+              content="Real Time Face Analyzer! Use this system to have AI Analyze your face to determine your age and facial expression." />
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+              integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+              crossorigin="anonymous" />
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+              integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+              crossorigin="anonymous" />
+        <link rel="stylesheet" href="css/styles.min.css" />
+
+        <meta name="twitter:card" content="summary" />
+        <meta property="og:url" content="https://bytecodeman.com/specialapps/facialAI/" />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="Real Time Face Analyzer!" />
+        <meta property="og:description"
+              content="Real Time Face Analyzer! Use this system to have AI Analyze your face to determine your age and facial expression." />
+        <meta property="og:image"
+              content="https://bytecodeman.com/specialapps/facialAI/img/facialrecognitionlogo.jpg" />
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({
+                google_ad_client: "ca-pub-9626577709396562",
+                enable_page_level_ads: true,
+            });
+        </script>
+    </head>
+    <body>
+        <div id="fb-root"></div>
+        <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+            <div class="container">
+                <a href="/specialapps/" class="navbar-brand mb-0 h1">Special Apps</a>
+                <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">bytecodeman.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <div class="jumbotron">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <h1 class="font-weight-bold">Real Time Face Analyzer!</h1>
+                        <img src="img/facialrecognitionlogo.jpg" alt="" class="logo rounded mb-4 d-block img-fluid" />
+                        <p>
+                            Have a robot analyze your face. See how old it thinks you are!!!
+                        </p>
+                        <p>
+                            Use at your own risk. <i class="align-middle far fa-laugh-wink fa-3x text-danger"></i>
+                        </p>
+
+                        <p class="d-print-none">
+                            <a href="#" data-toggle="modal" data-target="#myModal">About</a>
+                        </p>
+
+                        <div class="fb-share-button" data-href="https://bytecodeman.com/specialapps/facialAI/"
+                             data-layout="button" data-size="small"><a target="_blank"
+                               href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fbytecodeman.com%2Fspecialapps%2FfacialAI%2F&amp;src=sdkpreparse"
+                               class="fb-xfbml-parse-ignore">Share</a></div>
+                        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+                           data-show-count="false">Tweet</a>
+
+                    </div>
+                    <div class="col-lg-4 d-print-none">
+                        <ins class="adsbygoogle" style="display: block" data-ad-client="ca-pub-9626577709396562"
+                             data-ad-slot="7064413444" data-ad-format="auto"></ins>
+                        <script>
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col text-center">
+                    <div class="videocontainer">
+                        <div class="loading active">Loading . . .</div>
+                        <video class="video" autoplay muted playsinline></video>
+                        <canvas class="captureCanvas" style="display: none"></canvas>
+                        <div class="instructions">
+                            Look into your camera and Click Start Analysis
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <form id="recaptchacheck">
+                        <div id="alert" class="d-none alert alert-danger" role="alert"></div>
+                        <div class="row justify-content-center">
+                            <div class="col-md-3">
+                                <button class="mb-3 btn btn-primary btn-lg btn-block text-nowrap start">Start
+                                    Analysis</button>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="mb-3 btn btn-primary btn-lg btn-block text-nowrap stop">Stop
+                                    Analysis</button>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="mb-3 btn btn-primary btn-lg btn-block restart">Restart
+                                    App</button>
+                            </div>
+                        </div>
+                        <input type="hidden" id="recaptchaResponse" name="recaptchaResponse">
+                    </form>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Gender</label>
+                    <div id="gender" data-readonly class="form-control"></div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Gender Probability</label>
+                    <div id="genderProbability" data-readonly class="form-control"></div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Age:</label>
+                    <div id="age" data-readonly class="form-control"></div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Expression</label>
+                    <div id="expression" data-readonly class="form-control"></div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Expression Probability</label>
+                    <div id="expressionProbability" data-readonly class="form-control"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Real Time Face Analyzer!</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Designed and Coded by:</p>
+                        <p>
+                            <a href="mailto:tonysilvestri@bytecodeman.com">Antonio C. Silvestri</a>
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"
+                integrity="sha512-WNLxfP/8cVYL9sj8Jnp6et0BkubLP31jhTG9vhL/F5uEZmg5wEzKoXp1kJslzPQWwPT1eyMiSxlKCgzHLOTOTQ=="
+                crossorigin="anonymous"></script>
+        <script src="//cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+                crossorigin="anonymous"></script>
+        <script src="js/face-api.min.js"></script>
+        <script src="js/facialAIbundle.js"></script>
+        <script src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0" crossorigin="anonymous"
+                nonce="wWwKGSas"></script>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        <script src="//www.google.com/recaptcha/api.js?render=6LdWKUMaAAAAAF8zS_5ima4fp7rtuDz19s2tdvEU"></script>
+    </body>
+</html>
